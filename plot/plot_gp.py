@@ -9,8 +9,10 @@ def show(self, **kwargs):
         raise NotImplementedError()
 
 def _show1d(self, bmin = None, bmax = None, N_grid = 20):
-    if bmin or bmax is None:
-        bmin, bmax = self.get_boundary()
+    if bmin is None or bmax is None:
+        bmin_, bmax_ = self.get_boundary()
+        bmin = bmin.item()
+        bmax = bmax.item()
 
     x_lin = np.linspace(bmin, bmax, N_grid)
     mu_lin = np.zeros(N_grid)
