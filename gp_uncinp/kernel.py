@@ -8,7 +8,7 @@ from numpy import trace
 from math import *
 from copy import deepcopy
 
-class matern23_uncertain:
+class Kernel(object):
     def __init__(self, dim, l = 1.0, noise = 0.01, N = 100, aniso = None):
         # aniso (list) is anisotropic factor 
         params = [log(l), log(noise)]
@@ -69,16 +69,43 @@ class matern23_uncertain:
                 dif[i, :] /= self.aniso[i]
             r_vec = np.sqrt(np.sum(dif**2, axis = 0))
 
-        # calc  
-        exps = np.exp(-sqrt(3)*r_vec/self.l)
-        kern_vector =  (1 + sqrt(3)*r_vec/self.l) * exps
-        kern = np.mean(kern_vector)
+        kern, exps = self._k(r_vec)
 
         if not with_grad:
             return kern
 
-        left = -sqrt(3)*r_vec/self.l**2 + (1 + sqrt(3)*r_vec/self.l) * (sqrt(3)*r_vec/self.l**2)
+        left = self._left(r_vec)
         grad0 = np.mean(left * exps)
         grad1 = self.noise * boolean
         kern_grad = [grad0, grad1]
         return kern, kern_grad
+
+    def _k(self, r_vec):
+        raise NotImplementedError()
+
+    def _left(self, r_vec):
+        raise NotImplementedError()
+
+class Matern23(Kernel):
+    def __init__(self, dim, l = 1.0, noise = 0.01, N = 100, aniso = None):
+        super(Matern23, self).__init__(dim, l = 1.0, noise = 0.01, N = 100, aniso = None)
+
+    def _k(self, r_vec):
+        exps = np.exp(-sqrt(3)*r_vec/self.l)
+        kern_vector =  (1 + sqrt(3)*r_vec/self.l) * exps
+        kern = np.mean(kern_vector)
+        return kern, exps
+
+    def _left(self, r_vec):
+        left = -sqrt(3)*r_vec/self.l**2 + (1 + sqrt(3)*r_vec/self.l) * (sqrt(3)*r_vec/self.l**2)
+        return left
+
+
+
+
+        
+
+
+
+
+
