@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from gp import GaussianProcess 
+from classification import GPClassifier
 from kernel import matern23_uncertain
+import pickle
 
 def example_1d():
     kern = matern23_uncertain(1, l = 0.5, noise = 0.01)
@@ -20,10 +22,13 @@ def example_2d():
     gp = GaussianProcess(X, Y, kern)
     return gp
 
-if __name__=="__main__":
+def example_2d_gpc():
     gp = example_2d()
-    gp.show()
-    plt.show()
+    gpc = GPClassifier(gp)
+    return gpc
+
+if __name__=="__main__":
+    gpc = example_2d_gpc()
 
 
 
