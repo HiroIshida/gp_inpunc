@@ -30,3 +30,20 @@ def show2d(func, bmin, bmax, N = 20, fax = None, levels = None):
     ax.clabel(cs, fontsize=10)
     cf = ax.contourf(X, Y, mat_contourf, cmap = 'gray_r')
     fig.colorbar(cf)
+
+def scatter(rule, X, Y, fax = None):
+    if fax is None:
+        fig, ax = plt.subplots() 
+    else:
+        fig = fax[0]
+        ax = fax[1]
+
+    print X
+    dim = X[0][0].size
+    pair_list = rule(Y)
+    for pair in pair_list:
+        idxes, color = pair
+        if idxes is not None:
+            x1, x2 = [[X[idx][0][i] for idx in idxes] for i in range(dim)]
+            ax.scatter(x1, x2, c = color)
+

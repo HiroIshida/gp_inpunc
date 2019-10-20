@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from utils import show2d
+import utils
 
 def show(self, **kwargs):
     if self.dim == 1:
@@ -54,7 +54,7 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
 
     fig, ax = plt.subplots() 
     fax = (fig, ax)
-    show2d(func, bmin, bmax, fax = fax, levels = levels) 
+    utils.show2d(func, bmin, bmax, fax = fax, levels = levels) 
 
     if scatter_rule is None:
         ## Y -> [(idxes_1, c1), ..., (idxes_n, cn)]
@@ -64,10 +64,5 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
             return [(idxes, color)]
         scatter_rule = f
 
-    pair_list = scatter_rule(self.Y)
-    for pair in pair_list:
-        idxes, color = pair
-        if idxes is not None:
-            x1, x2 = [[self.X[idx][0][i] for idx in idxes] for i in range(2)]
-            ax.scatter(x1, x2, c = color)
+    utils.scatter(scatter_rule, self.X, self.Y, fax)
 
