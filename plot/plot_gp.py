@@ -29,7 +29,21 @@ def _show1d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20):
     plt.plot(x_lin, mu_lin + std_lin * 2, c = 'r')
     plt.plot(x_lin, mu_lin - std_lin * 2, c = 'r')
 
-def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None):
+def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None,
+        scatter_rule = None):
+    """
+    scatter_rule: Y -> [(idxes_1, "blue"), ..., (idxes_n, "red")]
+    example:
+        def f(Y):
+            idxes_1 = idxes_2 = []
+            for idx in range(len(Y)):
+                y = Y[idx]
+                if y > 0.0:
+                    idxes_1.append(idx)
+                else:
+                    idxes_2.append(idx)
+            return [(idxes_1, "blue"), (idxes_2, "red")]
+    """
 
     def func(x):
         mu, var = self.predict(x)
@@ -41,3 +55,19 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
     fig, ax = plt.subplots() 
     fax = (fig, ax)
     show2d(func, bmin, bmax, fax = fax, levels = levels) 
+
+    if scatter_rule is None:
+        ## Y -> [(idxes_1, c1), ..., (idxes_n, cn)]
+        def f(Y):
+            idxes = range(len(Y))
+            color = "red"
+            return [(idxes, color)]
+        scatter_rule = f
+
+    pair_list = scatter_rule(self.Y)
+    for pair in pair_list:
+        idxes, color = pair
+        if idxes is not None:
+            x1, x2 = [[self.X[idx][0][i] for idx in idxes] for i in range(2)]
+            ax.scatter(x1, x2, c = color)
+
