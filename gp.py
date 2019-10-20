@@ -30,8 +30,9 @@ class GaussianProcess:
         K_ss = np.matrix(self.kernel.k(x, x))
 
         Y_vec = np.matrix(self.Y).transpose()
+        y_mean = Y_vec.mean(axis = 0)
 
-        gp_mean = (np.dot(np.dot(K_s_tr, self.K_inv), Y_vec)).item()
+        gp_mean = (y_mean + np.dot(np.dot(K_s_tr, self.K_inv), Y_vec - y_mean)).item()
         gp_var = (K_ss - np.dot(np.dot(K_s_tr, self.K_inv), K_s)).item()
         if gp_var < 0:
             gp_var = 0
