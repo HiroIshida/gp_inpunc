@@ -16,6 +16,9 @@ class GaussianProcess:
         self.n_train = len(X)
         self.construct_matrixes()
 
+    ## import methods
+    from plot.plot_gp import show, _show1d
+
     def predict(self, x):
 
         withoutInpUnc = (type(x) is not tuple)
@@ -117,7 +120,7 @@ class GaussianProcess:
         self.K = K
         self.K_grad_lst = K_grad_lst
 
-    def get_boundary(self, margin = 0.0):
+    def get_boundary(self, margin = 0.2):
         x_lst_lst = [[self.X[i][0][j] for i in range(self.n_train)] for j in range(self.dim)]
         bmin_ = np.array([min(x_lst) for x_lst in x_lst_lst])
         bmax_ = np.array([max(x_lst) for x_lst in x_lst_lst])

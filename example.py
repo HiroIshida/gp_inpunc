@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from gp import GaussianProcess 
 from kernel import matern23_uncertain
 
@@ -7,3 +8,4 @@ cov = np.zeros((1, 1))
 X = [(np.array(e), cov) for e in [[0.0], [0.3],[1.0]]]
 Y = [0, 2, 1]
 gp = GaussianProcess(X, Y, kern)
+gp.show(N_grid = 100)
