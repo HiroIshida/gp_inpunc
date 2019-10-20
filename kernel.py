@@ -65,7 +65,6 @@ class matern23_uncertain:
 
             dif = pts1 - pts2
             # add anisotopic factor
-            print self.aniso
             for i in range(self.dim):
                 dif[i, :] /= self.aniso[i]
             r_vec = np.sqrt(np.sum(dif**2, axis = 0))

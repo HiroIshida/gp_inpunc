@@ -17,7 +17,7 @@ class GaussianProcess:
         self.construct_matrixes()
 
     ## import methods
-    from plot.plot_gp import show, _show1d
+    from plot.plot_gp import show, _show1d, _show2d
 
     def predict(self, x):
 

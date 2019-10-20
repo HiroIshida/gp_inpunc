@@ -1,16 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from utils import show2d
 
 def show(self, **kwargs):
     if self.dim == 1:
         self._show1d(**kwargs)
+    elif self.dim == 2:
+        self._show2d(**kwargs)
     else:
         raise NotImplementedError()
 
-def _show1d(self, bmin = None, bmax = None, N_grid = 20):
+def _show1d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20):
     if bmin is None or bmax is None:
-        bmin_, bmax_ = self.get_boundary()
+        bmin_, bmax_ = self.get_boundary(margin = margin)
         bmin = bmin.item()
         bmax = bmax.item()
 
@@ -26,7 +29,15 @@ def _show1d(self, bmin = None, bmax = None, N_grid = 20):
     plt.plot(x_lin, mu_lin + std_lin * 2, c = 'r')
     plt.plot(x_lin, mu_lin - std_lin * 2, c = 'r')
 
+def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None):
 
+    def func(x):
+        mu, var = self.predict(x)
+        return mu, mu
 
+    if (bmin is None) or (bmax is None):
+        bmin, bmax = self.get_boundary(margin = margin)
 
-
+    fig, ax = plt.subplots() 
+    fax = (fig, ax)
+    show2d(func, bmin, bmax, fax = fax, levels = levels) 
