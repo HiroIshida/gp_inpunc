@@ -38,7 +38,6 @@ def scatter(rule, X, Y, fax = None):
         fig = fax[0]
         ax = fax[1]
 
-    print X
     dim = X[0][0].size
     pair_list = rule(Y)
     for pair in pair_list:

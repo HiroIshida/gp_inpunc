@@ -33,16 +33,6 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
         scatter_rule = None):
     """
     scatter_rule: Y -> [(idxes_1, "blue"), ..., (idxes_n, "red")]
-    example:
-        def f(Y):
-            idxes_1 = idxes_2 = []
-            for idx in range(len(Y)):
-                y = Y[idx]
-                if y > 0.0:
-                    idxes_1.append(idx)
-                else:
-                    idxes_2.append(idx)
-            return [(idxes_1, "blue"), (idxes_2, "red")]
     """
 
     def func(x):
