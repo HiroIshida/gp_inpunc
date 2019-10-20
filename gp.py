@@ -9,15 +9,7 @@ from copy import deepcopy
 
 class GaussianProcess:
     def __init__(self, X, Y, kernel):
-        print "hoge"
-
-        def dimentions():
-            x0 = X[0]
-            if type(x0) == tuple: # input with covariance info
-                return x0[0].size
-            return x0.size
-
-        self.n_dim = dimentions()
+        self.dim = kernel.dim
         self.kernel = kernel
         self.X = X
         self.Y = Y
@@ -28,7 +20,7 @@ class GaussianProcess:
 
         withoutInpUnc = (type(x) is not tuple)
         if withoutInpUnc:
-            x = (x, np.zeros((self.n_dim, self.n_dim)))
+            x = (x, np.zeros((self.dim, self.dim)))
 
         K_s = self._construct_K_s(x)
         K_s_tr = K_s.transpose()
@@ -126,7 +118,7 @@ class GaussianProcess:
         self.K_grad_lst = K_grad_lst
 
     def get_boundary(self, margin = 0.0):
-        x_lst_lst = [[self.X[i][0][j] for i in range(self.n_train)] for j in range(self.n_dim)]
+        x_lst_lst = [[self.X[i][0][j] for i in range(self.n_train)] for j in range(self.dim)]
         bmin_ = np.array([min(x_lst) for x_lst in x_lst_lst])
         bmax_ = np.array([max(x_lst) for x_lst in x_lst_lst])
         dif = bmax_ - bmin_

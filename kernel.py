@@ -9,7 +9,7 @@ from math import *
 from copy import deepcopy
 
 class matern23_uncertain:
-    def __init__(self, l = 1.0, noise = 0.01, dim = 2, N = 100, aniso = None):
+    def __init__(self, dim, l = 1.0, noise = 0.01, N = 100, aniso = None):
         # aniso (list) is anisotropic factor 
         params = [log(l), log(noise)]
         self.set_param(params)
