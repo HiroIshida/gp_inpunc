@@ -15,19 +15,15 @@ class BayesianOpt(object):
         self.X = []
         self.Y = []
 
-    def train(self, x, y):
+    def train(self, x, y,
+            doOptmization = False, params_min = None, params_max = None):
+
         self.X.append(x)
         self.Y.append(y)
-        self.gp = GaussianProcess(self.X, self.Y, deepcopy(self.kernel))
+        self.gp = GaussianProcess(self.X, self.Y, self.gp.kernel)
+        if doOptmization:
+            self.gp.optimize(params_min = params_min, params_max = params_max)
 
     def pick_next_input(self): 
-        raise NotImplementedError()
-
-
-
-
-
-
-
-
+        raise NotImplementedError("overwrite this")
 
