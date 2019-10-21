@@ -20,7 +20,8 @@ class BayesianOpt(object):
 
         self.X.append(x)
         self.Y.append(y)
-        self.gp = GaussianProcess(self.X, self.Y, self.gp.kernel)
+        self.gp = GaussianProcess(self.X, self.Y, 
+                self.kernel_init if len(self.X) == 1 else self.gp.kernel)
         if doOptmization:
             self.gp.optimize(params_min = params_min, params_max = params_max)
 
