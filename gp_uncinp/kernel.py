@@ -88,7 +88,7 @@ class Kernel(object):
 
 class Matern23(Kernel):
     def __init__(self, dim, l = 1.0, noise = 0.01, N = 100, aniso = None):
-        super(Matern23, self).__init__(dim, l = 1.0, noise = 0.01, N = 100, aniso = None)
+        super(Matern23, self).__init__(dim, l = l, noise = noise, N = N, aniso = aniso)
 
     def _k(self, r_vec):
         exps = np.exp(-sqrt(3)*r_vec/self.l)
@@ -99,6 +99,21 @@ class Matern23(Kernel):
     def _left(self, r_vec):
         left = -sqrt(3)*r_vec/self.l**2 + (1 + sqrt(3)*r_vec/self.l) * (sqrt(3)*r_vec/self.l**2)
         return left
+
+class RBF(Kernel):
+    def __init__(self, dim, l = 1.0, noise = 0.01, N = 100, aniso = None):
+        super(RBF, self).__init__(dim, l = l, noise = noise, N = N, aniso = aniso)
+
+    def _k(self, r_vec):
+        exps = np.exp(- r_vec ** 2/ (2 * self.l **2))
+        kern_vector = exps
+        kern = np.mean(kern_vector)
+        return kern, exps
+
+    def _left(self, r_vec):
+        left = r_vec**2 / (self.l ** 3)
+        return left
+
 
 
 
