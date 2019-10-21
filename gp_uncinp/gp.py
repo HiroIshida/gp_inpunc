@@ -129,3 +129,18 @@ class GaussianProcess:
         bmin = bmin_ - margin * dif
         bmax = bmax_ + margin * dif
         return bmin, bmax
+
+    def get_value_minmax(self, margin = 0.2):
+        value_min_ = min(self.Y)
+        value_max_ = max(self.Y)
+        dif = value_max_ - value_min_
+        value_min = value_min_ - dif * margin
+        value_max = value_max_ + dif * margin
+        return value_min, value_max
+
+
+
+
+
+
+

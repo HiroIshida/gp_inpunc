@@ -44,7 +44,7 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
 
     fig, ax = plt.subplots() 
     fax = (fig, ax)
-    utils.show2d(func, bmin, bmax, fax = fax, levels = levels) 
+    utils.show2d(func, bmin, bmax, fax = fax, levels = levels, N = N_grid) 
 
     if scatter_rule is None:
         ## Y -> [(idxes_1, c1), ..., (idxes_n, cn)]
