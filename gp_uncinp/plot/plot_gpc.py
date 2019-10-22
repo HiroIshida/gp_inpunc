@@ -30,7 +30,8 @@ def _show2d(self, func, bmin = None, bmax = None, margin = 0.2, levels = None):
     utils.show2d(func, bmin, bmax, N = 30, fax = fax, levels = levels)  
 
     def rule(Y):
-        idxes_1 = idxes_2 = []
+        idxes_1 = []
+        idxes_2 = []
         for idx in range(len(Y)):
             y = Y[idx]
             if y > 0.0:
