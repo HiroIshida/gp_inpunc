@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 def show2d(func, bmin, bmax, N = 20, fax = None, levels = None):
     # fax is (fix, ax)
@@ -38,11 +39,26 @@ def scatter(rule, X, Y, fax = None):
         fig = fax[0]
         ax = fax[1]
 
+    pair_list = rule(Y)
+    for pair in pair_list:
+        idxes, color = pair
+        if idxes is not None:
+            x1, x2 = [[X[idx][0][i] for idx in idxes] for i in range(2)]
+            ax.scatter(x1, x2, c = color)
+
+def scatter3d(rule, X, Y, fax = None):
+    if fax is None:
+        fig = plt.figure()
+        ax = Axes3D(fig)
+    else:
+        fig = fax[0]
+        ax = fax[1]
+
     dim = X[0][0].size
     pair_list = rule(Y)
     for pair in pair_list:
         idxes, color = pair
         if idxes is not None:
-            x1, x2 = [[X[idx][0][i] for idx in idxes] for i in range(dim)]
-            ax.scatter(x1, x2, c = color)
+            x1, x2, x3 = [[X[idx][0][i] for idx in idxes] for i in range(3)]
+            ax.scatter(x1, x2, x3, c = color)
 

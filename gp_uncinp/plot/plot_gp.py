@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import math
 import utils
 
@@ -8,6 +9,8 @@ def show(self, **kwargs):
         self._show1d(**kwargs)
     elif self.dim == 2:
         self._show2d(**kwargs)
+    elif self.dim == 3:
+        self._show3d(**kwargs)
     else:
         raise NotImplementedError()
 
@@ -55,4 +58,24 @@ def _show2d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
         scatter_rule = f
 
     utils.scatter(scatter_rule, self.X, self.Y, fax)
+
+def _show3d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None,
+        scatter_rule = None):
+
+    if (bmin is None) or (bmax is None):
+        bmin, bmax = self.get_boundary(margin = margin)
+
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    fax = (fig, ax)
+
+    if scatter_rule is None:
+        ## Y -> [(idxes_1, c1), ..., (idxes_n, cn)]
+        def f(Y):
+            idxes = range(len(Y))
+            color = "red"
+            return [(idxes, color)]
+        scatter_rule = f
+
+    utils.scatter3d(scatter_rule, self.X, self.Y, fax)
 
