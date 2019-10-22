@@ -11,7 +11,7 @@ class GPClassifier:
         self.gp = gp
         self._construct_f_mode() # NOTE set member variables there 
 
-    from plot.plot_gpc import show, _show2d
+    from plot.plot_gpc import show, _show2d, _show3d
 
     def _construct_f_mode(self):
         # called only once in constructor

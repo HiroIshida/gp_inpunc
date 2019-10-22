@@ -37,7 +37,8 @@ def example_2d_gpc():
 
 if __name__=="__main__":
     gp = example_3d()
-    gp.show()
+    gpc = GPClassifier(gp)
+    gpc.show()
     plt.show()
 
 
