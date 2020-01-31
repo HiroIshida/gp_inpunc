@@ -34,11 +34,6 @@ class GPClassifier:
         self.L_mode = L
 
     def predict(self, x):
-
-        withoutInpUnc = (type(x) is not tuple)
-        if withoutInpUnc:
-            x = (x, np.zeros((self.gp.dim, self.gp.dim)))
-
         hessian_diag = self.hessian_diag_mode
         W = np.diag(-hessian_diag)
         W_half = np.diag(np.sqrt(- hessian_diag))

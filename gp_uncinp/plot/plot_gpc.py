@@ -31,19 +31,11 @@ def _show2d(self, func, bmin = None, bmax = None, margin = 0.2, levels = None):
     fig, ax = plt.subplots() 
     fax = (fig, ax)
     utils.show2d(func, bmin, bmax, N = 30, fax = fax, levels = levels)  
+    X_ = np.vstack([self.gp.kernel._format_input(self.gp.X[i])[0] for i in range(self.gp.n_train)])
+    idx_positive = np.array(self.gp.Y) > 0
+    ax.scatter(X_[idx_positive, 0], X_[idx_positive, 1], c="blue")
+    ax.scatter(X_[~idx_positive, 0], X_[~idx_positive, 1], c = "red")
 
-    def rule(Y):
-        idxes_1 = []
-        idxes_2 = []
-        for idx in range(len(Y)):
-            y = Y[idx]
-            if y > 0.0:
-                idxes_1.append(idx)
-            else:
-                idxes_2.append(idx)
-        return [(idxes_1, "blue"), (idxes_2, "red")]
-
-    utils.scatter(rule, self.gp.X, self.gp.Y, fax)
 
 def _show3d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None,
         scatter_rule = None):
@@ -54,6 +46,7 @@ def _show3d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = 
     fig = plt.figure()
     ax = Axes3D(fig)
     fax = (fig, ax)
+    raise NotImplementedError("under construction: delete rule")
 
     def rule(Y):
         idxes_1 = []

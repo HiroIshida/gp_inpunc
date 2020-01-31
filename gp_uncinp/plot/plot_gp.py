@@ -5,6 +5,7 @@ import math
 import utils
 
 def show(self, **kwargs):
+    raise NotImplementedError()
     if self.dim == 1:
         self._show1d(**kwargs)
     elif self.dim == 2:

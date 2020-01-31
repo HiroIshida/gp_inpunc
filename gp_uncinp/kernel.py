@@ -38,9 +38,16 @@ class Kernel(object):
         self.l = exp(params[0])
         self.noise = exp(params[1])
 
+    def _format_input(self, x):
+        withUnc = (type(x) == tuple)
+        if withUnc:
+            return x
+        cov = np.zeros((self.dim, self.dim))
+        return (x, cov)
+
     def k(self, x1, x2, with_grad = False):
-        mu1, cov1 = x1
-        mu2, cov2 = x2
+        mu1, cov1 = self._format_input(x1)
+        mu2, cov2 = self._format_input(x2)
 
         boolean = np.array_equal(mu1, mu2)
 
