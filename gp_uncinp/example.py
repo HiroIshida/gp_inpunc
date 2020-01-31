@@ -17,7 +17,7 @@ def example_1d():
 def example_2d():
     kern = RBF(dim = 2, l = 0.3, noise = 0.01)
     cov = np.zeros((2, 2))
-    X = [(np.array(e), cov) for e in [[0, 0.0], [0.3, 0.7],[0.6, 0.2], [1.0, 1.0]]]
+    X = [np.array(e) for e in [[0, 0.0], [0.3, 0.7],[0.6, 0.2], [1.0, 1.0]]]
     Y = [2, 3, -2, 1]
     gp = GaussianProcess(X, Y, kern)
     return gp
@@ -36,7 +36,7 @@ def example_2d_gpc():
     return gpc
 
 if __name__=="__main__":
-    gp = example_3d()
+    gp = example_2d()
     gpc = GPClassifier(gp)
     gpc.show()
     plt.show()

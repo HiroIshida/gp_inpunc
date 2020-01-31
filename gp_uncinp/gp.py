@@ -122,7 +122,8 @@ class GaussianProcess:
         self.K_grad_lst = K_grad_lst
 
     def get_boundary(self, margin = 0.2):
-        x_lst_lst = [[self.X[i][0][j] for i in range(self.n_train)] for j in range(self.dim)]
+        X_ = [self.kernel._format_input(self.X[i]) for i in range(self.n_train)]
+        x_lst_lst = [[X_[i][0][j] for i in range(self.n_train)] for j in range(self.dim)]
         bmin_ = np.array([min(x_lst) for x_lst in x_lst_lst])
         bmax_ = np.array([max(x_lst) for x_lst in x_lst_lst])
         dif = bmax_ - bmin_

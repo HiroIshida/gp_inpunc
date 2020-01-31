@@ -32,6 +32,7 @@ def _show2d(self, func, bmin = None, bmax = None, margin = 0.2, levels = None):
     fax = (fig, ax)
     utils.show2d(func, bmin, bmax, N = 30, fax = fax, levels = levels)  
 
+    """
     def rule(Y):
         idxes_1 = []
         idxes_2 = []
@@ -44,6 +45,7 @@ def _show2d(self, func, bmin = None, bmax = None, margin = 0.2, levels = None):
         return [(idxes_1, "blue"), (idxes_2, "red")]
 
     utils.scatter(rule, self.gp.X, self.gp.Y, fax)
+    """
 
 def _show3d(self, bmin = None, bmax = None, margin = 0.2, N_grid = 20, levels = None,
         scatter_rule = None):
