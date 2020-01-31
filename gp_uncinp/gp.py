@@ -20,11 +20,6 @@ class GaussianProcess:
     from plot.plot_gp import show, _show1d, _show2d, _show3d
 
     def predict(self, x):
-
-        withoutInpUnc = (type(x) is not tuple)
-        if withoutInpUnc:
-            x = (x, np.zeros((self.dim, self.dim)))
-
         K_s = self._construct_K_s(x)
         K_s_tr = K_s.transpose()
         K_ss = np.matrix(self.kernel.k(x, x))
